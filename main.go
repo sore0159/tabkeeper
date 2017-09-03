@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -10,42 +9,44 @@ import (
 	"syscall"
 )
 
-const HTTP_PORT = ":8000"
-const FILE_NAME = "TEST_FILE.txt"
+const HTTP_PORT = ":8001"
+const FILE_DIR_NAME = "FILES/"
+const TAB_FILE_NAME = FILE_DIR_NAME + "TAB_FILE.json"
+
+var LOG *Logger
 
 func main() {
+	var err error
+	if LOG, err = NewLogger(); err != nil {
+		log.Printf("ABORTING: Failed to initialize logging: %v\n", err)
+		return
+	}
 	dn := make(chan byte)
 	ch := make(chan os.Signal)
 	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
 
-	log.Println("Starting server on port", HTTP_PORT)
+	LOG.Inform("Starting server on port", HTTP_PORT)
 	// Creating my own server var to have access to server.Shutdown()
-	sf := NewSafeFiler(FILE_NAME)
+	sf := NewSafeFiler(TAB_FILE_NAME)
 	m := MakeMux(sf)
 	server := &http.Server{Addr: HTTP_PORT, Handler: m}
 	go func() {
 		if err := server.ListenAndServe(); err != nil {
-			log.Println("Listen and Serve Error:", err)
+			LOG.ServerErr("Listen and Serve Error: %v", err)
 			dn <- 0
 		}
 	}()
 	select {
 	case <-ch:
-		fmt.Println("")
-		log.Println("Termination signal recieved, stopping server...")
+		LOG.NewLine()
+		LOG.Inform("Termination signal recieved, stopping server...")
 		ctx := context.TODO()
 		err := server.Shutdown(ctx)
 		if err != nil {
-			LogServerErr("shutdown failure: %s", err)
+			LOG.ServerErr("shutdown failure: %v", err)
 		}
 	case <-dn:
-		fmt.Println("")
-		log.Println("Exiting program...")
+		LOG.NewLine()
+		LOG.Inform("Exiting program...")
 	}
-}
-
-// Stdout logging may be replaced with file-logging, so
-// just creating a simple wrapper func for now
-func LogServerErr(str string, args ...interface{}) {
-	log.Println(fmt.Errorf(str, args...))
 }

@@ -1,4 +1,17 @@
-2017 09 02
+### 2017 09 03
+
+It turns out the specific needs of my app were not suited to the more abstract concurrency guards I had built around my files.  Safe read and safe write methods are nice, but my only two interactions are really "read all" or "add this item to whatever you already have".  So I overhauled the concurrency guards to just specifically handle those two operations and abandoned the file-level wrappers.
+
+With regards to security, my first pass of cut&paste IP checking failed, because when I worked on it before I never ran from localhost.  It's not really a great solution anyway so I shelved it for now, but I need to figure out something before this is done.
+
+Also, I realized logging is a serious concern.  There are several places where things could go wrong with file read/writes, and as this program is meant to run in the background on my server hardware I need to setup a logfile for any potential errors.  Nothing too complicated, but another gear that needs to be fitted into the machine.  For now I'm using the golang STD log package, works fine.
+
+Starting to tinker around with the HTML interface for the app, which means working with go's template package.  Another area where I've heard there are some really nice fancy alternatives, but checking out new tools is the opposite of getting something done.
+
+I'm going to have to start thinking about how to implement "saved" commands: if I want a group of monthly reoccurring changes to be available with a single button click, but also configurable through the app, that means another separate subsystem with its own UI and persistence needs.
+
+
+### 2017 09 02
 
 First design issue: concurrent file access control.  
 

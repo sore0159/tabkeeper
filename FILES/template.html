@@ -1,0 +1,44 @@
+{{ define "frame" -}}
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{{ template "title" . }}</title>
+<!--
+<link rel="stylesheet" href="/css/{{ template "css" . }}.css">
+<link rel="shortcut icon" href="/img/yd32.ico">
+-->
+</head>
+<body>
+{{ template "body" . }}
+</body>
+</html>
+{{ end }}
+
+
+{{ define "css" }}basic{{ end }}
+{{ define "title" }}Sorell Tabkeeper{{ end }}
+{{ define "body" }}
+<h3>Existing Tab:</h3>
+{{ range . }}ENTRY: {{ . }}<br>{{ else }}No entries!<br>{{ end }}
+
+<h3>New Entry</h3>
+<form action="." method="post">
+        <label for="type_name">Name:</label>
+        <input type="text" id="type_name" name="entry_name">
+
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="entry_amount">
+
+        &nbsp; &nbsp; &nbsp;
+        <label for="eric_owe">Eric Owes Julie:</label>
+        <input type="radio" checked id="eric_owe" name="entry_direction" value="eric_owe">
+        &nbsp; &nbsp; &nbsp;
+
+        <label for="julie_owe">Julie Owes Eric:</label>
+        <input type="radio" id="julie_owe" name="entry_direction" value="julie_owe">
+        <br> <br>
+
+        <button type="submit">Submit!</button>
+</form>
+{{ end }}

@@ -1,3 +1,16 @@
+### 2017 09 04
+
+CSS has proved to be the bulk of this project design, as usability is the primary focus of the project.  Besides the normal "making the page look good" tasks, there was particular difficulty configuring css to highlight checkbox/radio button labels based on the status of their boxes.
+
+I'm happy with html5's form validations for the Description/amount fields.  Though since the step for amount is $0.01 I'm disappointed it is not simple to hide the field's step-wheel.  I've set up defaults so that for the most part, using the page should require minimal typing.
+
+Instead of working on 'saved' charges that would require an entire extra subsystem, I am allowing charges to be marked as 'repeatable'; this allows the UI for repeating charges to be built into the listing of all charges in a natural manner.  I default to non-repeatable simply to minimize display clutter.
+
+Color design will require user feedback: I think having different colors for each direction of charge will be helpful, but it could be too visually noisy.
+
+Next step is to get it running on my local system and configure apache to redirect properly.  This may require some reconfiguration of the app's routing, but otherwise the project is ready for use!
+
+
 ### 2017 09 03
 
 It turns out the specific needs of my app were not suited to the more abstract concurrency guards I had built around my files.  Safe read and safe write methods are nice, but my only two interactions are really "read all" or "add this item to whatever you already have".  So I overhauled the concurrency guards to just specifically handle those two operations and abandoned the file-level wrappers.

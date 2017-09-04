@@ -107,8 +107,8 @@ func FormatAmount(x int) string {
 	if x == 0 {
 		return "Julie and Eric have an even balance!"
 	} else if x > 0 {
-		return fmt.Sprintf("Eric owes Julie $%.2f", float64(x)*0.01)
+		return fmt.Sprintf("Eric owes Julie $%d", x/100)
 	} else {
-		return fmt.Sprintf("Julie owes Eric $%.2f", float64(-x)*0.01)
+		return fmt.Sprintf("Julie owes Eric $%d", -x/100)
 	}
 }

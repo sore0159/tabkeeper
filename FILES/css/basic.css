@@ -15,6 +15,17 @@ body {
 div {
         padding: 0px; margin: 0px;
 }
+h2, h3 {
+        margin-top: 0;
+        margin-bottom: 0px;
+        padding: 0;
+}
+label {
+        font-weight: bold;
+}
+li {
+        margin-bottom: 2px;
+}
 #titlebar, #bodyholder {
         min-width: 650px;
         padding: 10px 20px 20px 20px;
@@ -47,19 +58,9 @@ div {
         margin: 15px 0px;
         border-radius: 15px;
 }
-h2, h3 {
-        margin-top: 0;
-        margin-bottom: 0px;
-        padding: 0;
-}
 #entryform h3 {
         text-align: center;
         margin: 0;
-}
-#existingtab h3 {
-        padding-left: 5px;
-        border: 0 solid #000;
-        border-bottom-width: 1px;
 }
 
 #entryform button {
@@ -69,63 +70,76 @@ h2, h3 {
         border: 1px solid #090;
         padding: 5px;
 }
-#entryform button:hover {
-        background-color: #bfb;
-}
-label {
-        font-weight: bold;
-}
 .checklabel {
         color: #aaa;
-}
-#entryform input[type=radio]:checked+label {
-        color: #008;
-}
-#existingtab {
-        padding: 10px;
-}
-.datestr {
-        font-weight: bold;
-}
-.eowesj {
-        color: #009;
-}
-.jowese {
-        color: #090;
-}
-.tabsplit {
-        padding: 10px;
-        background-color: #f8f8f8;
-        margin-bottom: 20px;
-}
-form .repeatentry {
-        display: inline-block;
-        padding: 0; margin: 0;
-}
-li {
-        margin-bottom: 2px;
 }
 .checkboxlabel {
         color: #aaa;
 }
+#entryform input[type=radio]:checked+label {
+        color: #008;
+        text-decoration: underline;
+}
 #entryform input[type=checkbox]:checked+label {
         color: #800;
+        text-decoration: underline;
+}
+#entryform button:hover {
+        background-color: #bfb;
+}
+
+#existingtab {
+        padding: 10px;
+}
+
+.tabsplit {
+        padding: 10px;
+        background-color: #ffffff;
+        margin-bottom: 20px;
+}
+#existingtab h3 {
+        padding-left: 5px;
+        border: 0 solid #000;
+        border-bottom-width: 1px;
+}
+.datestr {
+        font-weight: bold;
+}
+.amountspan {
+}
+.descspan {
+        text-decoration: underline;
+}
+
+form .repeatentry {
+        display: inline-block;
+        padding: 0; margin: 0;
 }
 .repeatbuttone, .repeatbuttonj {
         border: 0px solid #000;
         background-color: #fff;
 }
-.repeatbuttone {
+
+.eowesj {
         color: #00f;
 }
+.repeatbuttone {
+        color: #00f;
+        border: 1px solid #00f;
+}
 .repeatbuttone:hover {
-        background-color: #99f;
+        background-color: #00f;
         color: #fff;
 }
+
+.jowese {
+        color: #098;
+}
 .repeatbuttonj {
-        color: #0f0;
+        color: #098;
+        border: 1px solid #098;
 }
 .repeatbuttonj:hover {
-        background-color: #0f0;
+        background-color: #098;
         color: #fff;
 }

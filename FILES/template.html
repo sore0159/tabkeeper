@@ -58,7 +58,7 @@
         {{ range .Entries }}<li>
         {{- if .Repeatable -}}
         <form class="repeatentry" action="." method="post">
-        <span class={{ if gt .Amount 0 }}eowesj{{ else }}jowese{{ end }}><span class=datestr>{{ .DateStr }}</span> {{ .AmountStr }}: {{ .Description }} </span>
+        <span class={{ if gt .Amount 0 }}eowesj{{ else }}jowese{{ end }}><span class=datestr>{{ .DateStr }}</span> <span class=amountspan>{{ .AmountStr }}:</span> <span class=descspan>{{ .Description }}</span> </span>
         <input type="hidden" name="entry_name" value="{{ .Description }}">
         <input type="hidden" name="entry_amount" value="{{ .RepAmount }}">
         <input type="hidden" name="entry_repeatable" value="on">
@@ -71,7 +71,7 @@
         {{ end }}
         </form>
         {{- else -}}
-        <span class={{ if gt .Amount 0 }}eowesj{{ else }}jowese{{ end }}><span class=datestr>{{ .DateStr }}</span> {{ .AmountStr }}: {{ .Description }} </span>
+        <span class={{ if gt .Amount 0 }}eowesj{{ else }}jowese{{ end }}><span class=datestr>{{ .DateStr }}</span> <span class=amountspan>{{ .AmountStr }}:</span> <span class=descspan>{{ .Description }}</span> </span>
         {{- end -}}
         </li>
         {{ end }}

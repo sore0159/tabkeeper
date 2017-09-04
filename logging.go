@@ -12,7 +12,12 @@ const LOG_FILE_NAME = FILE_DIR_NAME + "LOG_FILE.txt"
 // just creating a simple wrapper func for now
 func (l *Logger) ServerErr(str string, args ...interface{}) {
 	msg := fmt.Sprintf(str, args...)
-	l.Err.Println(msg)
+	l.File.Println(msg)
+	l.Println(msg)
+}
+func (l *Logger) Record(str string, args ...interface{}) {
+	msg := fmt.Sprintf(str, args...)
+	l.File.Println(msg)
 	l.Println(msg)
 }
 
@@ -25,7 +30,7 @@ func (l *Logger) Inform(args ...interface{}) {
 }
 
 type Logger struct {
-	Err *log.Logger
+	File *log.Logger
 	*log.Logger
 }
 
@@ -35,7 +40,7 @@ func NewLogger() (*Logger, error) {
 		return nil, err
 	}
 	l := new(Logger)
-	l.Err = log.New(f, "", log.Lshortfile|log.Ldate|log.Ltime)
+	l.File = log.New(f, "", log.Lshortfile|log.Ldate|log.Ltime)
 	l.Logger = log.New(os.Stdout, "", log.Ldate|log.Ltime)
 	return l, nil
 }

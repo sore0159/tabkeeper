@@ -1,11 +1,12 @@
 {{ define "frame" -}}
+{{ $PROXY := "" }}
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>{{ template "title" . }}</title>
-<link rel="stylesheet" href="/css/{{ template "css" . }}.css">
-<link rel="shortcut icon" href="/img/yd32.ico">
+<link rel="stylesheet" href="{{ $PROXY }}/css/{{ template "css" . }}.css">
+<link rel="shortcut icon" href="{{ $PROXY }}/img/yd32.ico">
 </head>
 <body>
 {{ template "titlebar" . }}

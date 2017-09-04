@@ -3,7 +3,6 @@ package main
 import (
 	"html/template"
 	"net/http"
-	"strings"
 )
 
 const TEMPLATE_FILE_NAME = FILE_DIR_NAME + "template.html"
@@ -22,22 +21,6 @@ func MakeMux(sf *SafeFiler) *http.ServeMux {
 }
 
 func (s *SafeFiler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if false { // TODO: get this straightened out
-		rIP := r.Header.Get("x-forwarded-for")
-		if !strings.HasPrefix(rIP, "192.168.1.") && !strings.HasPrefix(rIP, "127.0.0.1") && !strings.HasPrefix(rIP, "127.0.0.") {
-			http.Error(w, "Does not support nonlocal connections", 400)
-			return
-		}
-	}
-	var assume int
-	if r.URL.Path == "/eric" {
-		assume = -1
-	} else if r.URL.Path == "/julie" {
-		assume = 1
-	} else if r.URL.Path != "/" {
-		http.Redirect(w, r, "/", 301)
-		return
-	}
 	if r.Method == "POST" {
 		s.HandlePost(w, r)
 		return
@@ -56,6 +39,7 @@ func (s *SafeFiler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "TEMPLATE READ ERROR", 500)
 		return
 	}
+	var assume int // todo
 	pTab, err := ProcessTab(tab, assume)
 	if err != nil {
 		LOG.ServerErr("Failed to process tab: %s", err.Error())

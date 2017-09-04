@@ -9,14 +9,16 @@ import (
 )
 
 type SafeFiler struct {
-	FileName string
+	FileName  string
+	ProxyAddr string
 	*sync.RWMutex
 }
 
-func NewSafeFiler(fileName string) *SafeFiler {
+func NewSafeFiler(fileName, proxy string) *SafeFiler {
 	return &SafeFiler{
-		FileName: fileName,
-		RWMutex:  new(sync.RWMutex),
+		FileName:  fileName,
+		ProxyAddr: proxy,
+		RWMutex:   new(sync.RWMutex),
 	}
 }
 

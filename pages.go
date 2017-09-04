@@ -60,5 +60,5 @@ func (sf *SafeFiler) HandlePost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "TAB WRITE ERROR", 500)
 		return
 	}
-	http.Redirect(w, r, "/", 301)
+	http.Redirect(w, r, r.URL.Path, 301)
 }

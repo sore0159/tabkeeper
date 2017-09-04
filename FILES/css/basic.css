@@ -1,0 +1,132 @@
+body {
+        padding: 0px;
+        margin: 0px;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 200px;
+        padding-top: 20px;
+
+        color: #000;
+        background-color: #eee;
+        font-family: "Courier New", Courier, Monospace;
+        text-align: center;
+}
+
+div {
+        padding: 0px; margin: 0px;
+}
+#titlebar, #bodyholder {
+        min-width: 650px;
+        padding: 10px 20px 20px 20px;
+
+        border: 1px solid #888;
+        border-radius: 10px;
+
+        text-align: left;
+        background-color: #fff;
+        transition: margin 1s;
+        min-width: 650px;
+}
+#bodyholder {
+        display: inline-block;
+}
+#titlebar {
+        padding: 5px 20px 5px 20px;
+        margin-bottom: 20px;
+        font-size: xx-large;
+}
+
+#newentry {
+        text-align:center;
+}
+#entryform {
+        display: inline-block;
+        text-align:left;
+        border: 1px solid #888;
+        padding: 15px;
+        padding-top: 5px;
+        margin: 15px 0px;
+        border-radius: 15px;
+}
+h2, h3 {
+        margin-top: 0;
+        margin-bottom: 0px;
+        padding: 0;
+}
+#entryform h3 {
+        text-align: center;
+        margin: 0;
+}
+#existingtab h3 {
+        padding-left: 5px;
+        border: 0 solid #000;
+        border-bottom-width: 1px;
+}
+
+#entryform button {
+        font-size: large;
+        background-color: #dfd;
+        width: 75%;
+        border: 1px solid #090;
+        padding: 5px;
+}
+#entryform button:hover {
+        background-color: #bfb;
+}
+label {
+        font-weight: bold;
+}
+.checklabel {
+        color: #aaa;
+}
+#entryform input[type=radio]:checked+label {
+        color: #008;
+}
+#existingtab {
+        padding: 10px;
+}
+.datestr {
+        font-weight: bold;
+}
+.eowesj {
+        color: #009;
+}
+.jowese {
+        color: #090;
+}
+.tabsplit {
+        padding: 10px;
+        background-color: #f8f8f8;
+        margin-bottom: 20px;
+}
+form .repeatentry {
+        display: inline-block;
+        padding: 0; margin: 0;
+}
+li {
+        margin-bottom: 2px;
+}
+.checkboxlabel {
+        color: #aaa;
+}
+#entryform input[type=checkbox]:checked+label {
+        color: #800;
+}
+.repeatbuttone, .repeatbuttonj {
+        border: 0px solid #000;
+        background-color: #fff;
+}
+.repeatbuttone {
+        color: #00f;
+}
+.repeatbuttone:hover {
+        background-color: #99f;
+        color: #fff;
+}
+.repeatbuttonj {
+        color: #0f0;
+}
+.repeatbuttonj:hover {
+        background-color: #0f0;
+        color: #fff;
+}

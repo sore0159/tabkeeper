@@ -10,6 +10,13 @@ const TEMPLATE_FILE_NAME = FILE_DIR_NAME + "template.html"
 
 func MakeMux(sf *SafeFiler) *http.ServeMux {
 	mux := http.NewServeMux()
+
+	const STATIC_DIR = "FILES"
+	mux.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, STATIC_DIR+"/img/yd32.ico")
+	})
+	mux.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir(STATIC_DIR+"/img"))))
+	mux.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir(STATIC_DIR+"/css"))))
 	mux.Handle("/", sf)
 	return mux
 }
@@ -22,7 +29,12 @@ func (s *SafeFiler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	if r.URL.Path != "/" {
+	var assume int
+	if r.URL.Path == "/eric" {
+		assume = -1
+	} else if r.URL.Path == "/julie" {
+		assume = 1
+	} else if r.URL.Path != "/" {
 		http.Redirect(w, r, "/", 301)
 		return
 	}
@@ -44,7 +56,13 @@ func (s *SafeFiler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "TEMPLATE READ ERROR", 500)
 		return
 	}
-	tp.ExecuteTemplate(w, "frame", tab)
+	pTab, err := ProcessTab(tab, assume)
+	if err != nil {
+		LOG.ServerErr("Failed to process tab: %s", err.Error())
+		http.Error(w, "TAB PROCESS ERROR: "+err.Error(), 500)
+		return
+	}
+	tp.ExecuteTemplate(w, "frame", pTab)
 }
 
 func (sf *SafeFiler) HandlePost(w http.ResponseWriter, r *http.Request) {

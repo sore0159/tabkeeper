@@ -4,41 +4,79 @@
 <head>
 <meta charset="utf-8">
 <title>{{ template "title" . }}</title>
-<!--
 <link rel="stylesheet" href="/css/{{ template "css" . }}.css">
 <link rel="shortcut icon" href="/img/yd32.ico">
--->
 </head>
 <body>
+{{ template "titlebar" . }}
+        <div id=bodyholder>
 {{ template "body" . }}
+        </div>
 </body>
 </html>
 {{ end }}
 
 
 {{ define "css" }}basic{{ end }}
-{{ define "title" }}Sorell Tabkeeper{{ end }}
-{{ define "body" }}
-<h3>Existing Tab:</h3>
-{{ range . }}ENTRY: {{ . }}<br>{{ else }}No entries!<br>{{ end }}
+{{ define "title" }}Sorell Family Tab of Marriage{{ end }}
 
-<h3>New Entry</h3>
-<form action="." method="post">
-        <label for="type_name">Name:</label>
-        <input type="text" id="type_name" name="entry_name">
+{{ define "titlebar" -}}
+<div id=titlebar>Sorell Family Tab of Marriage</div>
+{{ end }}
+{{ define "body" -}}
+<h2 id=currenttotal>Currently {{ .TotalStr }}</h3>
+<div id=newentry>
+<form id=entryform action="." method="post">
+        <h3>New Charge</h3>
+        <label for="type_name">Description:</label>
+        <input type="text" id="type_name" name="entry_name" size=90 required autofocus=true>
+        <br>
+        <br>
 
-        <label for="amount">Amount:</label>
-        <input type="text" id="amount" name="entry_amount">
+        <label for="amount">Dollars:</label>
+        <input type="number" step=0.01 id="amount" name="entry_amount" required min=1>
+        &nbsp; 
 
-        &nbsp; &nbsp; &nbsp;
-        <label for="eric_owe">Eric Owes Julie:</label>
-        <input type="radio" checked id="eric_owe" name="entry_direction" value="eric_owe">
-        &nbsp; &nbsp; &nbsp;
+        <input  class="checklabel"type="radio" checked id="eric_owe" name="entry_direction" value="eric_owe">
+        <label class="checklabel" for="eric_owe">Eric Owes Julie</label>
+        &nbsp;
 
-        <label for="julie_owe">Julie Owes Eric:</label>
-        <input type="radio" id="julie_owe" name="entry_direction" value="julie_owe">
+        <input class="checklabel" type="radio" id="julie_owe" name="entry_direction" value="julie_owe">
+        <label class="checklabel" for="julie_owe">Julie Owes Eric</label>
+
         <br> <br>
 
-        <button type="submit">Submit!</button>
-</form>
-{{ end }}
+        <button type="submit">Add To Tab</button>
+        <input class="checkboxlabel" type="checkbox" id="repeatcheck" name="entry_repeatable">
+        <label class="checkboxlabel" for="repeatcheck">Repeatable?</label>
+</form></div>
+<div id=existingtab>
+{{- range .SplitList }}
+        <div class=tabsplit>
+        <h3>{{ .Title }}</h3>
+        <ul>
+        {{ range .Entries }}<li>
+        {{- if .Repeatable -}}
+        <form class="repeatentry" action="." method="post">
+        <span class={{ if gt .Amount 0 }}eowesj{{ else }}jowese{{ end }}><span class=datestr>{{ .DateStr }}</span> {{ .AmountStr }}: {{ .Description }} </span>
+        <input type="hidden" name="entry_name" value="{{ .Description }}">
+        <input type="hidden" name="entry_amount" value="{{ .RepAmount }}">
+        <input type="hidden" name="entry_repeatable" value="on">
+        {{ if gt .Amount 0 }}
+        <input type="hidden" name="entry_direction" value="eric_owe">
+        <button type="submit" class=repeatbuttone>Repeat Charge</button>
+        {{ else }}
+        <input type="hidden" name="entry_direction" value="julie_owe">
+        <button type="submit" class=repeatbuttonj>Repeat Charge</button>
+        {{ end }}
+        </form>
+        {{- else -}}
+        <span class={{ if gt .Amount 0 }}eowesj{{ else }}jowese{{ end }}><span class=datestr>{{ .DateStr }}</span> {{ .AmountStr }}: {{ .Description }} </span>
+        {{- end -}}
+        </li>
+        {{ end }}
+        </ul>
+        </div>
+{{ else }}No entries!<br>{{ end -}}
+</div>
+{{- end }}

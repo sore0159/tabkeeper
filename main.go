@@ -22,12 +22,7 @@ func main() {
 		log.Printf("ABORTING: Failed to initialize logging: %v\n", err)
 		return
 	}
-	dn := make(chan byte)
-	ch := make(chan os.Signal)
-	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
 
-	LOG.Record("Starting server on port %s", HTTP_PORT)
-	// Creating my own server var to have access to server.Shutdown()
 	var tabFile, proxyAddr string
 	var flagT, flagP bool
 	for _, str := range os.Args[1:] {
@@ -53,14 +48,21 @@ func main() {
 	}
 
 	sf := NewSafeFiler(tabFile, proxyAddr)
+	// Creating my own server var to have access to server.Shutdown()
 	m := MakeMux(sf)
 	server := &http.Server{Addr: HTTP_PORT, Handler: m}
+	dn := make(chan byte)
+	LOG.Record("Starting server on port %s", HTTP_PORT)
 	go func() {
 		if err := server.ListenAndServe(); err != nil {
-			LOG.ServerErr("Listen and Serve Error: %v", err)
+			if err != http.ErrServerClosed {
+				LOG.ServerErr("Listen and Serve Error: %v", err)
+			}
 			dn <- 0
 		}
 	}()
+	ch := make(chan os.Signal)
+	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
 	select {
 	case <-ch:
 		LOG.NewLine()

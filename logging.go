@@ -40,7 +40,7 @@ func NewLogger() (*Logger, error) {
 		return nil, err
 	}
 	l := new(Logger)
-	l.File = log.New(f, "", log.Lshortfile|log.Ldate|log.Ltime)
+	l.File = log.New(f, "", log.Ldate|log.Ltime)
 	l.Logger = log.New(os.Stdout, "", log.Ldate|log.Ltime)
 	return l, nil
 }
